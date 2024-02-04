@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Web Dò Vé Số 4.0</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style> 
+body{
+    background-color: rgb(175, 162, 162);
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    height: auto;
+}
+
+
+b
+
+
+.container{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    height: 40%;
+  }
+
+
+  th, td {
+    border: 0.2em solid yellow;
+    padding: 0.3em;
+    text-align: center;
+    font-size: 2em;
+  }
+
+
+  button {
+    background-color: #ff6961;
+    color: white;
+    border: 0.2em solid black;
+    border-radius: 3em;
+    padding: 0.8em 1em;
+    cursor: pointer;
+    font-size: 1.2em ;
+    font-weight: bold;
+  }
+
+
+  label {
+    font-size: 2em;
+  }
+
+
+  h2{
+    font-size: 3em;
+    color: #ff0d00;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="container">
+  <h2 >Web Dò Vé Số</h2>
+
+
+  <label for="dataInput">Nhập vé số của bạn:</label>
+  <input type="number" id="dataInput">
+  <button onclick="addData()">Thêm số</button>
+
+
+  <label for="checkInput">Nhập số Trúng :</label>
+  <input type="number" id="checkInput">
+  <button onclick="checkData()">Dò Số</button>
+
+
+</div>
+
+
+<table id="dataTable">
+  <thead>
+    <tr>
+      <th>Vé số của bạn</th>
+      <th>Nếu nhập sai hãy ấn Delete</th>
+    </tr>
+  </thead>
+  <tbody id="dataBody">
+  </tbody>
+</table>
+
+
+<script>
+    
+  let data = [];
+
+function addData() {
+  const inputData = document.getElementById("dataInput").value;
+  if (inputData.trim() !== "") {
+    data.push(inputData);
+    displayData();
+    document.getElementById("dataInput").value = "";
+  }
+}
+
+function displayData() {
+  const tableBody = document.getElementById("dataBody");
+  tableBody.innerHTML = "";
+
+  data.forEach((item, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item}</td>
+      <td><button onclick="deleteData(${index})">Delete</button></td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+function deleteData(index) {
+  data.splice(index, 1);
+  displayData();
+}
+function displayFilteredData(filteredData) {
+  const tableBody = document.getElementById("dataBody");
+  tableBody.innerHTML = "";
+
+  filteredData.forEach((item, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item}</td>
+      <td><button onclick="deleteData(${data.indexOf(item)})">Delete</button></td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+
+function checkData() {
+  const checkInput = document.getElementById("checkInput").value;
+  const isDataExist = data.includes(checkInput);
+  alert(isDataExist ? "Trúng rồi, Chúc Mừng Bạn ! ! !" : "Trật Lất ! ! ! ");
+}
+</script>
+
+
+</body>
+</html>
